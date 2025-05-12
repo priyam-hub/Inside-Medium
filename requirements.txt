@@ -1,0 +1,18 @@
+numpy
+flask
+pandas
+seaborn
+librosa
+langchain
+streamlit
+matplotlib
+scikit-learn
+python-dotenv
+langchain_groq
+langchain_openai
+streamlit-lottie
+langchain-pinecone
+langchain_community
+sentence-transformers
+langchain_experimental
+-e .
