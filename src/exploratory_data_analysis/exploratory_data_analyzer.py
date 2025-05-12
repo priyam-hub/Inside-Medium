@@ -12,7 +12,6 @@ from ..utils.save_plot import PlotSaver
 # LOGGER SETUP
 eda_logger = LoggerSetup(logger_name = "exploratory_data_analyzer.py", log_filename_prefix = "exploratory_data_analyzer").get_logger()
 
-
 class MediumEDA:
     
     """
