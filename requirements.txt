@@ -1,10 +1,14 @@
+nltk
 numpy
 flask
+spacy
 pandas
 seaborn
 librosa
+textblob
 langchain
 streamlit
+wordcloud
 matplotlib
 scikit-learn
 python-dotenv
@@ -12,6 +16,7 @@ langchain_groq
 langchain_openai
 streamlit-lottie
 langchain-pinecone
+spacy-transformers
 langchain_community
 sentence-transformers
 langchain_experimental
