@@ -1,17 +1,10 @@
 # DEPENDENCIES
 
-import re
-import spacy
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from librosa import ex
 from pathlib import Path
-from textblob import TextBlob
 import matplotlib.pyplot as plt
-from wordcloud import WordCloud
-from collections import Counter
-from nltk.corpus import stopwords
 
 from ..utils.logger import LoggerSetup
 from ..utils.save_plot import PlotSaver
@@ -198,7 +191,12 @@ class MediumEDA:
                      alpha      = 0.85
                      )
 
-            plt.title("Distribution of Reading Time", fontsize = 16, fontweight = 'bold', color = '#333333')
+            plt.title("Distribution of Reading Time", 
+                      fontsize    = 16, 
+                      fontweight  = 'bold', 
+                      color       = '#333333'
+                      )
+            
             plt.xlabel("Reading Time (in minutes)", fontsize = 12, labelpad = 10)
             plt.ylabel("Frequency", fontsize = 12, labelpad = 10)
 
@@ -243,19 +241,29 @@ class MediumEDA:
                 raise ValueError(f"Column '{reading_time_column}' not found in DataFrame.")
 
             data_col = self.df[reading_time_column].dropna()
-
-            
+    
             plt.figure(figsize = (12, 6))
 
             plt.subplot(1, 2, 1)
             exp_sample = np.random.exponential(scale = data_col.mean(), size = 6000)
-            plt.hist(exp_sample, bins = 100, color = 'skyblue', edgecolor = 'black')
+            
+            plt.hist(exp_sample, 
+                     bins       = 100, 
+                     color      = 'skyblue', 
+                     edgecolor  = 'black'
+                     )
+            
             plt.title("Exponential Distribution (Continuous)", fontsize = 12)
             plt.xlabel("Reading Time", fontsize = 10)
             plt.ylabel("Frequency", fontsize = 10)
 
             plt.subplot(1, 2, 2)
-            plt.hist(data_col, bins = 100, color = 'salmon', edgecolor = 'black')
+            plt.hist(data_col, 
+                     bins       = 100, 
+                     color      = 'salmon', 
+                     edgecolor  = 'black'
+                     )
+            
             plt.title("Empirical Distribution (Observed Data)", fontsize = 12)
             plt.xlabel("Reading Time", fontsize = 10)
             plt.ylabel("Frequency", fontsize = 10)
@@ -486,6 +494,132 @@ class MediumEDA:
             
             raise
 
+    def plot_claps_vs_responses_regression(self, 
+                                           claps_column      : str = 'claps', 
+                                           responses_column  : str = 'responses'
+                                           ) -> None:
+        """
+        Plot a regression line between number of claps and responses.
+
+        Arguments:
+            
+            `claps_column`              {str}       : Column name for the number of claps.
+            
+            `responses_column`          {str}       : Column name for the number of responses.
+
+        Returns:
+            
+            None
+        
+        """
+        
+        try:
+        
+            if claps_column not in self.df.columns or responses_column not in self.df.columns:
+                missing               = [col for col in [claps_column, responses_column] if col not in self.df.columns]
+                
+                eda_logger.error(f"Missing column(s): {', '.join(missing)}")
+                
+                raise ValueError(f"Missing column(s): {', '.join(missing)}")
+
+
+            df_plot                   = self.df[[claps_column, responses_column]].dropna()
+            df_plot                   = df_plot[df_plot[responses_column].apply(lambda x: str(x).isdigit())]
+            df_plot[responses_column] = df_plot[responses_column].astype(int)
+
+            plt.figure(figsize=(10, 6))
+            sns.set_style("whitegrid")
+            sns.set_context("notebook")
+
+            sns.regplot(x            = claps_column,
+                        y            = responses_column,
+                        data         = df_plot,
+                        scatter_kws  = {"color": "#1f77b4", "alpha": 0.6},
+                        line_kws     = {"color": "red", "lw": 2},
+                        ci           = 95
+                        )
+
+            plt.title("Relationship Between Claps and Responses", 
+                      fontsize    = 16, 
+                      fontweight  = 'bold', 
+                      color       = "#333333"
+                      )
+            
+            plt.xlabel("Number of Claps", fontsize = 12)
+            plt.ylabel("Number of Responses", fontsize = 12)
+            plt.grid(True, 
+                     linestyle = "--", 
+                     alpha     = 0.5
+                     )
+
+            ax = plt.gca()
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+
+            plt.tight_layout()
+            self.plt_saver.save_plot(plot = plt, plot_name = "claps_vs_responses_regression")
+
+            eda_logger.info("Regression plot of claps vs responses created successfully")
+
+        except Exception as e:
+            eda_logger.error(f"Error creating regression plot: {repr(e)}")
+            
+            raise
+
+    def plot_correlation_heatmap(self) -> None:
+        """
+        Plot a beautifully designed heatmap showing correlation between numerical features in the DataFrame.
+
+        Returns:
+        
+            None
+        
+        """
+        
+        try:
+
+            correlation = self.df.corr(numeric_only = True)
+
+            if correlation.empty:
+                eda_logger.error("No numeric columns available for correlation matrix.")
+                raise ValueError("No numeric columns available for correlation matrix.")
+
+            # Set plot aesthetics
+            plt.figure(figsize = (12, 8))
+            sns.set_style("white")
+            sns.set_context("talk")
+
+            sns.heatmap(correlation,
+                        annot       = True,
+                        fmt         = ".2f",
+                        cmap        = sns.color_palette("magma", as_cmap=True),
+                        linewidths  = 1.5,
+                        linecolor   = "black",
+                        square      = True,
+                        cbar_kws    = {"shrink": 0.75},
+                        annot_kws   = {"size": 10, "weight": "bold", "color": "black"}
+                        )
+
+            plt.title("Correlation Matrix of Numerical Features", 
+                      fontsize    = 16, 
+                      fontweight  = "bold", 
+                      color       = "#333333"
+                      )
+            
+            plt.xticks(rotation = 45, ha = 'right', fontsize = 10)
+            plt.yticks(rotation = 0, fontsize = 10)
+
+            plt.tight_layout()
+            self.plt_saver.save_plot(plot = plt, plot_name = "correlation_heatmap")
+
+            eda_logger.info("Correlation heatmap plot created successfully")
+
+        except Exception as e:
+            eda_logger.error(f"Error creating correlation heatmap: {repr(e)}")
+            
+            raise
+
+
 
     def run_all_eda(self):
         """
@@ -501,6 +635,8 @@ class MediumEDA:
             self.plot_poisson_ecdf_comparison()
             self.plot_publication_count()
             self.plot_reading_time_by_publication()
+            self.plot_claps_vs_responses_regression()
+            self.plot_correlation_heatmap()
 
             eda_logger.info("All EDA plots generated successfully")
 
