@@ -366,7 +366,7 @@ class MediumEDA:
 
         Arguments:
         
-            publication_column {str} : Column name containing publication names (default is 'publication').
+            `publication_column` {str} : Column name containing publication names (default is 'publication').
 
         Returns:
         
@@ -418,6 +418,74 @@ class MediumEDA:
             
             raise
 
+    def plot_reading_time_by_publication(self, 
+                                         reading_time_column : str = 'reading_time', 
+                                         publication_column  : str = 'publication'
+                                         ) -> None:
+        """
+        Plot KDE (Kernel Density Estimate) of reading time for each publication.
+
+        Arguments:
+            
+            `reading_time_column`       {str}      : Column containing reading time values.
+            
+            `publication_column`        {str}      : Column containing publication categories.
+
+        Returns:
+
+            None
+        
+        """
+        
+        try:
+        
+            if reading_time_column not in self.df.columns or publication_column not in self.df.columns:
+                missing_cols = [col for col in [reading_time_column, publication_column] if col not in self.df.columns]
+                eda_logger.error(f"Missing column(s) in DataFrame: {', '.join(missing_cols)}")
+        
+                raise ValueError(f"Missing column(s) in DataFrame: {', '.join(missing_cols)}")
+
+            data_filtered = self.df[[reading_time_column, publication_column]].dropna()
+
+            plt.figure(figsize = (10, 6))
+            sns.set_style("whitegrid")
+            sns.set_palette("colorblind")
+
+            sns.kdeplot(data           = data_filtered,
+                        x              = reading_time_column,
+                        hue            = publication_column,
+                        fill           = True,
+                        alpha          = 0.3,
+                        common_norm    = False
+                        )
+
+            plt.title("KDE of Reading Time by Publication", 
+                      fontsize    = 16, 
+                      fontweight  = 'bold', 
+                      color       = '#333333'
+                      )
+            
+            plt.xlabel("Reading Time (minutes)", fontsize = 12)
+            plt.ylabel("Density", fontsize = 12)
+            plt.xlim(0, 25)
+            plt.grid(True, 
+                     linestyle  = '--', 
+                     alpha      = 0.5)
+
+            ax = plt.gca()
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+
+            plt.tight_layout()
+            self.plt_saver.save_plot(plot = plt, plot_name = "reading_time_kde_by_publication")
+
+            eda_logger.info("KDE plot of reading_time by publication created successfully")
+
+        except Exception as e:
+            eda_logger.error(f"Error creating KDE plot: {repr(e)}")
+            
+            raise
+
 
     def run_all_eda(self):
         """
@@ -432,6 +500,7 @@ class MediumEDA:
             self.plot_continuous_vs_discrete_reading_time()
             self.plot_poisson_ecdf_comparison()
             self.plot_publication_count()
+            self.plot_reading_time_by_publication()
 
             eda_logger.info("All EDA plots generated successfully")
 
