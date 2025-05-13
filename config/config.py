@@ -13,6 +13,9 @@ class Config:
     MEDIUM_PROCESSED_DATASET_PATH         = "./data/medium_processed_data.csv"
     MEDIUM_NORMALIZED_DATASET_PATH        = "./data/medium_normalized_data.csv"
 
+    MEDIUM_DATASET_NAME                   = "dorianlazar/medium-articles-dataset"
+    MEDIUM_DATASET_SAVE_PATH              = "./data/"
+
 
     @staticmethod
     def setup_directories():

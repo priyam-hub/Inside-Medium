@@ -20,8 +20,8 @@ def main():
 
     try:
 
-        # downloader            = DownloadData(dataset_name   = "dorianlazar/medium-articles-dataset",
-        #                                      download_path  = "./data/"
+        # downloader            = DownloadData(dataset_name   = Config.MEDIUM_DATASET_NAME,
+        #                                      download_path  = Config.MEDIUM_DATASET_SAVE_PATH,
         #                                      )
 
         # downloader.download_dataset()
@@ -68,7 +68,7 @@ def main():
                                                  preprocessed_data  = medium_processed_df
                                                  )
         
-        result_df             = sim_finder.get_similar_articles(query_title = "Machine Learning")
+        result_df             = sim_finder.get_similar_articles(query_title = "Data Science")
         
         print(result_df.head())
 
