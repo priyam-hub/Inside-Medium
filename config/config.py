@@ -10,7 +10,7 @@ class Config:
 
     EDA_RESULTS_PATH                      = "./results/eda_results"
     MEDIUM_RAW_DATASET_PATH               = "./data/medium_raw_data.csv"
-    MEDIUM_CLEANED_DATASET_PATH           = "./data/medium_processed_data.csv"
+    MEDIUM_PROCESSED_DATASET_PATH         = "./data/medium_processed_data.csv"
 
 
     @staticmethod
