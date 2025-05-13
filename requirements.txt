@@ -3,6 +3,7 @@ numpy
 flask
 spacy
 pandas
+kaggle
 seaborn
 librosa
 textblob
