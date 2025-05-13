@@ -4,7 +4,10 @@ from config.config import Config
 from src.utils.logger import LoggerSetup
 from src.utils.data_loader import DataLoader
 from src.utils.download_dataset import DownloadData
+from src.vectorizer.tfidf_vectorizer import Vectorizer
+from src.normalizer.nmf_normalizer import NMFNormalizer
 from src.data_preprocessor.data_preprocessor import DataPreprocessor
+from src.recommendation_engine.similarity_finder import SimilarityFinder
 from src.exploratory_data_analysis.exploratory_data_analyzer import MediumEDA
 
 import warnings
@@ -17,14 +20,13 @@ def main():
 
     try:
 
-        # Save this in your script
-        downloader            = DownloadData(dataset_name   = "dorianlazar/medium-articles-dataset",
-                                             download_path  = "./data/"
-                                             )
+        # downloader            = DownloadData(dataset_name   = "dorianlazar/medium-articles-dataset",
+        #                                      download_path  = "./data/"
+        #                                      )
 
-        downloader.download_dataset()
+        # downloader.download_dataset()
 
-        main_logger.info("Dataset downloaded successfully.")
+        # main_logger.info("Dataset downloaded successfully.")
 
         dataLoader            = DataLoader()   
         medium_raw_df         = dataLoader.data_loader(file_path = Config.MEDIUM_RAW_DATASET_PATH)
@@ -46,6 +48,29 @@ def main():
                               )
         
         main_logger.info("Processed data saved successfully.")
+
+        vectorizer            = Vectorizer(medium_processed_df)
+        articles              = vectorizer.get_vectorized_articles()
+
+        nmf_norm              = NMFNormalizer(articles_tfidf = articles, 
+                                              dataframe      = medium_processed_df
+                                              )
+        
+        df_normalized         = nmf_norm.normalize_nmf_features(n_components = 10)
+
+        dataLoader.data_saver(dataframe = df_normalized, 
+                              file_path = Config.MEDIUM_NORMALIZED_DATASET_PATH
+                              )
+        
+        main_logger.info("Normalized data saved successfully.")
+
+        sim_finder            = SimilarityFinder(df_normalized      = df_normalized, 
+                                                 preprocessed_data  = medium_processed_df
+                                                 )
+        
+        result_df             = sim_finder.get_similar_articles(query_title = "Machine Learning")
+        
+        print(result_df.head())
 
     except Exception as e:
         
