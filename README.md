@@ -116,7 +116,7 @@ python setup.py
 C:\Users\<Your_Username>\.kaggle\kaggle.json
 ```
 
-#### Step - 4: Create a .env file in the root directory to add Credentials
+#### Step - 4: Create a .env file in the root directory to add Credentials or (Change the filename ".sample_env" to ".env")
 
 ```bash
 KAGGLE_USERNAME = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
@@ -184,6 +184,8 @@ Inside-Medium/
 │   ├── medium_normalized_data.csv            # Normalized Data of the Medium Articles
 │   ├── medium_processed_data.csv             # Processed Data of the Medium Articles
 │   └── medium_raw_data.csv                   # Raw Data of the Medium Articles
+├── logger/                                   # Logger Setup Directory
+│   └── logger.py                             # Format of the Logger Setup of the Project
 ├── notebooks/                                # Jupyter notebooks for experimentation
 │   └── Recommendation_System.ipynb           # Experimented Recommendation Engine in Jupyter Notebook
 ├── results/                                  # Directory to Store the results of the Project
@@ -208,8 +210,7 @@ Inside-Medium/
 │       ├── __init__.py                     
 │       ├── data_loader.py                    # Load and Save Data from Local
 │       ├── download_dataset.py               # Download the Data from Kaggle
-│       ├── save_plot.py                      # Save the Plot in Specified Path
-│       └── logger.py                         # Logger Setup
+│       └── save_plot.py                      # Save the Plot in Specified Path
 └── web/
     ├── __init__.py  
     ├── static/                                
