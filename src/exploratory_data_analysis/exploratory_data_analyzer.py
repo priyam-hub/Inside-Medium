@@ -1,13 +1,17 @@
 # DEPENDENCIES
 
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
 from pathlib import Path
 import matplotlib.pyplot as plt
 
-from ..utils.logger import LoggerSetup
-from ..utils.save_plot import PlotSaver
+from logger.logger import LoggerSetup
+from src.utils.save_plot import PlotSaver
 
 # LOGGER SETUP
 eda_logger = LoggerSetup(logger_name = "exploratory_data_analyzer.py", log_filename_prefix = "exploratory_data_analyzer").get_logger()

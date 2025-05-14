@@ -1,7 +1,7 @@
 # DEPENDENCIES
 
 from config.config import Config
-from src.utils.logger import LoggerSetup
+from logger.logger import LoggerSetup
 from src.utils.data_loader import DataLoader
 from src.utils.download_dataset import DownloadData
 from src.vectorizer.tfidf_vectorizer import Vectorizer
@@ -20,23 +20,23 @@ def main():
 
     try:
 
-        # downloader            = DownloadData(dataset_name   = Config.MEDIUM_DATASET_NAME,
-        #                                      download_path  = Config.MEDIUM_DATASET_SAVE_PATH,
-        #                                      )
+        downloader            = DownloadData(dataset_name   = Config.MEDIUM_DATASET_NAME,
+                                             download_path  = Config.MEDIUM_DATASET_SAVE_PATH,
+                                             )
 
-        # downloader.download_dataset()
+        downloader.download_dataset()
 
-        # main_logger.info("Dataset downloaded successfully.")
+        main_logger.info("Dataset downloaded successfully.")
 
         dataLoader            = DataLoader()   
         medium_raw_df         = dataLoader.data_loader(file_path = Config.MEDIUM_RAW_DATASET_PATH)
         main_logger.info("Data loaded successfully:")
 
-        # data_analyzer         = MediumEDA(dataframe       = medium_raw_df, 
-        #                                   output_dir      = Config.EDA_RESULTS_PATH)    
+        data_analyzer         = MediumEDA(dataframe       = medium_raw_df, 
+                                          output_dir      = Config.EDA_RESULTS_PATH)    
          
-        # data_analyzer.run_all_eda()
-        # main_logger.info("All EDA completed successfully.")
+        data_analyzer.run_all_eda()
+        main_logger.info("All EDA completed successfully.")
 
         preprocessor          = DataPreprocessor(dataFrame = medium_raw_df)
         medium_processed_df   = preprocessor.preprocess_data()
@@ -69,6 +69,8 @@ def main():
                                                  )
         
         result_df             = sim_finder.get_similar_articles(query_title = "Data Science")
+
+        main_logger.info("Similar articles found successfully.")
         
         print(result_df.head())
 

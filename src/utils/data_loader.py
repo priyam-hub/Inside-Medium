@@ -1,7 +1,11 @@
 # DEPENDENCIES
 
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 import pandas as pd
-from .logger import LoggerSetup
+from logger.logger import LoggerSetup
 
 data_loader_logger = LoggerSetup(logger_name = "data_loader.py", log_filename_prefix = "data_loader").get_logger()
 

@@ -1,10 +1,14 @@
 # DEPENDENCIES
 
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 import pandas as pd
 from pandas import DataFrame
 from difflib import get_close_matches
 
-from ..utils.logger import LoggerSetup
+from logger.logger import LoggerSetup
 
 # LOGGER SETUP
 similarity_logger = LoggerSetup(logger_name = "similarity_finder.py", log_filename_prefix = "similarity_finder").get_logger()

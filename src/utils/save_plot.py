@@ -1,7 +1,11 @@
 # DEPENDENCIES
 
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 from librosa import ex
-from .logger import LoggerSetup
+from logger.logger import LoggerSetup
 import matplotlib.pyplot as plt
 
 # LOGGER SETUP

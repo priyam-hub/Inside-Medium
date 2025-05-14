@@ -1,9 +1,13 @@
 # DEPENDENCIES
 
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 import re
 import pandas as pd
 
-from ..utils.logger import LoggerSetup
+from logger.logger import LoggerSetup
 
 # LOGGER SETUP
 preprocessor_logger = LoggerSetup(logger_name = "data_preprocessor.py", log_filename_prefix = "data_preprocessor").get_logger()

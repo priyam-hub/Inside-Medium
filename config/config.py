@@ -9,7 +9,7 @@ class Config:
     """
 
     EDA_RESULTS_PATH                      = "./results/eda_results"
-    MEDIUM_RAW_DATASET_PATH               = "./data/medium_raw_data.csv"
+    MEDIUM_RAW_DATASET_PATH               = "./data/medium_data.csv"
     MEDIUM_PROCESSED_DATASET_PATH         = "./data/medium_processed_data.csv"
     MEDIUM_NORMALIZED_DATASET_PATH        = "./data/medium_normalized_data.csv"
 

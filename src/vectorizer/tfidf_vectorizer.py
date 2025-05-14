@@ -1,10 +1,14 @@
 # DEPENDENCIES
 
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from ..utils.logger import LoggerSetup
+from logger.logger import LoggerSetup
 
 # LOGGER SETUP
 vectorizer_logger = LoggerSetup(logger_name = "tfidf_vectorizer.py", log_filename_prefix = "tfidf_vectorizer").get_logger()

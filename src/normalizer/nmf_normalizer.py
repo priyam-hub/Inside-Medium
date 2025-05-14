@@ -1,11 +1,15 @@
 # DEPENDENCIES
 
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.decomposition import NMF
 from sklearn.preprocessing import normalize
 
-from ..utils.logger import LoggerSetup
+from logger.logger import LoggerSetup
 
 # LOGGER SETUP
 nmf_logger = LoggerSetup(logger_name = "nmf_normalizer.py", log_filename_prefix = "nmf_normalizer").get_logger()
