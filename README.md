@@ -110,7 +110,7 @@ python setup.py
 
 - Log-In to your Kaggle Account
 - An API token downloaded from Kaggle Account Settings → Create New Token.
-- Manually place your kaggle.json (downloaded from https://www.kaggle.com/account) into this location:
+- Manually place your kaggle.json (downloaded from https://www.kaggle.com/settings) into this location:
 
 ```plaintext
 C:\Users\<Your_Username>\.kaggle\kaggle.json
