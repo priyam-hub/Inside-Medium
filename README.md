@@ -79,6 +79,15 @@ The **Medium Articles Dataset** is a curated collection of publicly available ar
 
 ---
 
+## 📰 Published Article
+
+Explore other Detailed Fine-Tuning Methods of Large Language Models with Mathematical Calculations:
+
+🔗 Read the article here:
+[Inside Medium’s Recommendation Engine: How It Knows What You’ll Love](https://medium.com/@priyampal/inside-mediums-recommendation-engine-how-it-knows-what-you-ll-love-982cc295e0de)
+
+---
+
 ## 🛠️ Installation
 
 #### Step - 1: Repository Cloning
