@@ -275,7 +275,7 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 <div align="center">
 
-**Made by Priyam Pal**
+**Made by Priyam Pal - AI and Data Science Engineer**
 
 [↑ Back to Top]
 
